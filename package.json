@@ -1,0 +1,18 @@
+{
+  "name": "pingroom-starter-team-checklist",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Publish a shared human checklist and export an attributed completion receipt.",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node src/main.js publish",
+    "check": "node src/main.js check",
+    "connect": "node src/connect.js",
+    "find-id": "node src/main.js find-id",
+    "demo": "node src/demo.js",
+    "test": "node --test"
+  },
+  "dependencies": { "@pingroom/sdk": "0.6.0" },
+  "license": "MIT"
+}

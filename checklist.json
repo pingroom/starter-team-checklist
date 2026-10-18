@@ -1,0 +1,9 @@
+{
+  "checklistId": "onboarding-guide-042",
+  "title": "Check the onboarding guide",
+  "items": [
+    "Follow the installation steps on a clean machine",
+    "Check that the example output matches the guide",
+    "Confirm that the troubleshooting links open"
+  ]
+}
