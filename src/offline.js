@@ -26,7 +26,12 @@ export function offline({ onSend, onRead, onRooms, timeoutMs = 5000 } = {}) {
       if (init.method === 'GET' && u.pathname === `/api/agent/notifications/${ID}` && notification) {
         return onRead ? await onRead(structuredClone(notification), init.signal) : Response.json(notification);
       }
-      if (init.method === 'GET' && u.pathname === '/api/agent/notifications') return Response.json({ data: notification ? [notification] : [] });
+      if (init.method === 'GET' && u.pathname === '/api/agent/notifications') {
+        // Mirrors the server's history validation: limit is 1–25.
+        const limit = Number(u.searchParams.get('limit') ?? 25);
+        if (!Number.isInteger(limit) || limit < 1 || limit > 25) return Response.json({ message: 'The limit field must be between 1 and 25.' }, { status: 422 });
+        return Response.json({ data: notification ? [notification] : [] });
+      }
       throw new Error('Unexpected offline request.');
     } });
   return { client, calls };

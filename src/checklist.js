@@ -104,10 +104,11 @@ export async function runChecklist({ client, checklist: raw, token, room, direct
     if (operation === 'find-id') {
       const candidates = [];
       for (let page = 1; page <= 5; page++) {
-        const result = await client.notifications.list({ page, limit: 50 });
+        // The history endpoint accepts a page size of at most 25.
+        const result = await client.notifications.list({ page, limit: 25 });
         if (!Array.isArray(result?.data)) throw new Error('Invalid notification history response.');
         for (const n of result.data) if (uuid(n?.id) && n.correlation_id === state.correlation) candidates.push(n.id);
-        if (result.data.length < 50) break;
+        if (result.data.length < 25) break;
       }
       return { status: 'candidates', notificationIds: [...new Set(candidates)], note: 'Recent visible history only. Candidates are not verified; absence does not prove the send failed.' };
     }
